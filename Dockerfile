@@ -1,10 +1,7 @@
 # use small node image
 FROM node:14.16.0-alpine3.10
 # install Java
-RUN apk update && \
-    apk upgrade 
-RUN apk add openjdk8=8.252.09-r0
-RUN java --version
+RUN apk upgrade --update && apk add openjdk8-jre
 # install git ca-certificates openssl openssh for CircleCI
 # install jq for JSON parsing
 RUN apk add --update --no-cache git openssh ca-certificates openssl jq gettext xmlstarlet curl
