@@ -1,20 +1,18 @@
 # docker-sfdx-cli
- 
-Dockerfile to create basic image for use with SalesforceDX on CircleCI.
+Dockerfile for sfdx projects
 
-Lightweight Docker image using node alpine.
+This project will try to cover any pre-requisite for the tools and environment you might need in order to build a CI/CD process with Salesforce development.
 
-Includes:
-- jq for shell JSON parsing
-- gettext for text file processing
-- ca-certificates, openssl for test result and artifact storage on CircleCI
-- openssh for CircleCI SSH access
-- SalesforceDX CLI from NPM
+## What you can find currently in this image:
+
+- Commitlint: Try semantic convetion to improve the way you document your changes in your git log.
+- SFDX installation: All the power of this CLI ready to be used.
+- SFDX scanner **static analysis code**
+- Jest: LWC testing will be your ally in your journey.
 
 Image on docker hub: https://hub.docker.com/r/gauravtrivedi/node-sfdx-cli/
 
 [![Docker Automated build](https://img.shields.io/docker/automated/gauravtrivedi/node-sfdx-cli.svg?style=plastic)](https://hub.docker.com/r/gauravtrivedi/node-sfdx-cli/builds/)
+## In what is based this image?
 
-Image is automatically rebuilt on new releases of:
-- sfdx-cli (NPM package)
-- node:14.16.0-alpine3.10 (root image)
+This image currently use openjdk as its main core and has Node.js, so you can add `npm / yarn` instructions to your pipeline.

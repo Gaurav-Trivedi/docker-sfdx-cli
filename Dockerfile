@@ -42,9 +42,6 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 	&& node --version \
 	&& npm --version
 
-# COPY package.json .
-# COPY package-lock.json .
-# COPY commitlint.config.js .
 RUN java -version
 RUN apt update && apt -y install jq \
 	&& npm install \
