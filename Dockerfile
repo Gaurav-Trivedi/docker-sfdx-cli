@@ -10,6 +10,7 @@ RUN npm i -g sfdx-cli
 RUN sfdx plugins:install sfdx-cli@7.89.2
 RUN sfdx --version
 RUN sfdx plugins --core
+RUN echo 'y' | sfdx plugins:install @salesforce/sfdx-scanner
 
 # revert to low privilege user
 USER node
