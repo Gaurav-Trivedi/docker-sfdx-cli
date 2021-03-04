@@ -1,10 +1,11 @@
 # use small node image
 FROM node:14.16.0-alpine3.10
-
+# install Java
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y default-jre-headless
 # install git ca-certificates openssl openssh for CircleCI
 # install jq for JSON parsing
 RUN apk add --update --no-cache git openssh ca-certificates openssl jq gettext xmlstarlet curl
-RUN apt install openjdk-11-jre-headless
 
 # install latest sfdx from npm
 RUN npm i -g sfdx-cli
