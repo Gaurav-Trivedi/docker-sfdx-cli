@@ -47,6 +47,6 @@ RUN apt update && apt -y install jq \
 	&& npm install \
 	&& npm i sfdx-cli -g \
 	&& npm install @salesforce/lwc-jest --save-dev \
-	&& echo 'y' | sfdx plugins:install @salesforce/sfdx-scanner
+	&& echo 'y' | sfdx plugins:install @salesforce/sfdx-scanner@2.10.0
 # revert to low privilege user
 USER node
