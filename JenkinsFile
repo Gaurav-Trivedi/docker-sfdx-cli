@@ -13,16 +13,15 @@ pipeline{
         stage('Build Docker Image'){
             steps{
                 script{
-                    docker.build("$HUB_USER/$IMAGE_NAME:$IMAGE_TAG","-f Dockerfile")
+                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}","-f Dockerfile .")
                 }
             }
         }
         stage("Push to Dockerhub") {
-           
             steps {
                 script {
                     echo "Pushing the image to docker hub"
-                    def localImage = "${params.IMAGE_NAME}:${params.IMAGE_TAG}"
+                    def localImage = "${IMAGE_NAME}:${IMAGE_TAG}"
                     def repositoryName = "${HUB_USER}/${localImage}"
                     // Create a tag that going to push into DockerHub
                     sh "docker tag ${localImage} ${repositoryName} "
