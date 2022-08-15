@@ -1,10 +1,8 @@
 pipeline{
     agent any
     parameters {
-        string(name: "BRANCH_NAME", defaultValue: 'master', description: '')
         string(name: "IMAGE_NAME", defaultValue: 'node-sfdx-cli', description: '')
-        string(name: "IMAGE_TAG", defaultValue: 'fresh', description: 'Image tag')
-        booleanParam(name: "PUSH_IMAGE", defaultValue: false)
+        string(name: "IMAGE_TAG", defaultValue: 'lts', description: 'Image tag')
     }
     environment{
         HUB_USER = 'gauravtrivedi'
@@ -25,7 +23,7 @@ pipeline{
                     def repositoryName = "${HUB_USER}/${localImage}"
                     // Create a tag that going to push into DockerHub
                     sh "docker tag ${localImage} ${repositoryName} "
-                    docker.withRegistry("", "DockerHubCredentials") {
+                    docker.withRegistry("", "DOCKERHUBCRED") {
                     def image = docker.image("${repositoryName}");
                         image.push()
                     }
