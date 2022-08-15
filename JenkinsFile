@@ -1,0 +1,42 @@
+pipeline{
+    agent any
+    parameters {
+        string(name: "BRANCH_NAME", defaultValue: 'master', description: '')
+        string(name: "IMAGE_NAME", defaultValue: 'node-sfdx-cli', description: '')
+        string(name: "IMAGE_TAG", defaultValue: 'fresh', description: 'Image tag')
+        booleanParam(name: "PUSH_IMAGE", defaultValue: false)
+    }
+    environment{
+        HUB_USER = 'gauravtrivedi'
+    }
+    stages{
+        stage('Build Docker Image'){
+            steps{
+                script{
+                    docker.build("$HUB_USER/$IMAGE_NAME:$IMAGE_TAG","-f Dockerfile")
+                }
+            }
+        }
+        stage("Push to Dockerhub") {
+            when { 
+                equals 
+                expected: "true", 
+                actual: "${params.PUSH_IMAGE}" 
+            }
+            steps {
+                script {
+                    echo "Pushing the image to docker hub"
+                    def localImage = "${params.IMAGE_NAME}:${params.IMAGE_TAG}"
+                    def repositoryName = "${HUB_USER}/${localImage}"
+                    // Create a tag that going to push into DockerHub
+                    sh "docker tag ${localImage} ${repositoryName} "
+                    docker.withRegistry("", "DockerHubCredentials") {
+                    def image = docker.image("${repositoryName}");
+                        image.push()
+                    }
+                    echo "Pushing the image to docker hub"
+                }
+            }
+        }
+    }
+}
